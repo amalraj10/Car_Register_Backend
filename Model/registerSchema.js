@@ -1,4 +1,4 @@
-//import mongoose
+
 const mongoose = require('mongoose')
 
 const registerSchema = new mongoose.Schema({
@@ -48,8 +48,7 @@ const registerSchema = new mongoose.Schema({
 
 })
 
-//create modal
 const vechile_details = mongoose.model("vechile_details",registerSchema)
 
-//export
+
 module.exports = vechile_details

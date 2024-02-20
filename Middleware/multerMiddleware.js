@@ -1,13 +1,13 @@
-//import multer
+
 const multer = require('multer')
 
-//disk storage
+
 const storage = multer.diskStorage({
     destination:(req,file,callback)=>{
 callback(null,'./uploads')
     },
 
-    filename:()=>{
+    filename:(req,file,callback)=>{
       const filename =  `image-${Date.now()}-${file.originalname}`
     callback(null,filename)
     }
@@ -26,13 +26,9 @@ const fileFilter = (req,file,callback)=>{
 
 }
 
-
-//multerconfig
-
 const multerConfig = multer({
     storage,
     fileFilter
 })
 
-//export multer
 module.exports = multerConfig

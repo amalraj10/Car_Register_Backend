@@ -8,21 +8,22 @@ exports.register =async(req,res)=>{
 
     console.log('inside the controller - register');
 
- 
-console.log(req.files);
-    const vattachments = req.files.vattachment;
-    console.log(vattachments)
+ let imgarray = []
+    for(let obj of req.files){
+         imgarray.push(obj.filename)
+    }
+    console.log(imgarray)
     
 
     const{vname,vmodel,vnumber,vyear,vtype,vitems,vbrand,vdefects} = req.body
 
-    console.log(`${vname},${vmodel},${vnumber},${vyear},${vtype},${vitems},${vbrand},${vdefects},${vattacthment}`);
+    console.log(`${vname},${vmodel},${vnumber},${vyear},${vtype},${vitems},${vbrand},${vdefects}`);
 
     
 
     try{
         const newRegister = new vechile_details({
-            vname,vmodel,vnumber,vyear,vtype,vitems,vbrand,vdefects,vattacthment
+            vname,vmodel,vnumber,vyear,vtype,vitems,vbrand,vdefects,vattacthment:imgarray
 
         })
         await newRegister.save()
@@ -32,4 +33,15 @@ console.log(req.files);
         res.status(401).json(`Request Failed Due to ${err}`)
     }
 
-}
+    }
+
+//get details
+    exports.getallDetails = async(req,res)=>{
+    
+        try{
+         const VehicleDetails = await vechile_details.find()
+         res.status(200).json(VehicleDetails)
+        }catch(err){
+            res.status(401).json(`Request failed due to ${err}`)
+        }
+        }
